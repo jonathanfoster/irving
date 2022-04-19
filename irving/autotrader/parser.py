@@ -25,17 +25,22 @@ def parse_listings(path):
 def parse_listing(listing_tag):
     listing = AutotraderVehicleListing()
     listing.listing_id = parse_listing_id(listing_tag)
-    condition, year, make, model, trim = parse_listing_title(listing_tag)
-    listing.condition = condition.value
-    listing.year = year
-    listing.make = make
-    listing.model = model
-    listing.trim = trim
-    listing.price = parse_listing_price(listing_tag)
-    listing.miles = parse_listing_miles(listing_tag)
-    listing.owner, listing.distance = parse_listing_owner(listing_tag)
-    listing.listing_url = listing.format_listing_url(listing.listing_id)
-    return listing
+    try:
+        condition, year, make, model, trim = parse_listing_title(listing_tag)
+        listing.condition = condition.value
+        listing.year = year
+        listing.make = make
+        listing.model = model
+        listing.trim = trim
+        listing.price = parse_listing_price(listing_tag)
+        listing.miles = parse_listing_miles(listing_tag)
+        listing.owner, listing.distance = parse_listing_owner(listing_tag)
+        listing.listing_url = listing.format_listing_url(listing.listing_id)
+        return listing
+    except ValueError as exc:
+        raise ValueError(
+            f"Error parsing listing id {listing.listing_id}: {exc}"
+        ) from exc
 
 
 def parse_listing_id(listing_tag):
@@ -82,9 +87,10 @@ def parse_listing_miles(listing_tag):
     ).find_next("div")
     if not listing_miles_tag:
         raise ValueError("Listing miles tag not found.")
-    listing_miles = int(
-        listing_miles_tag.get_text().replace(",", "").replace("miles", "")
-    )
+    listing_miles_text = listing_miles_tag.get_text()
+    if not listing_miles_text.endswith("miles"):
+        return None
+    listing_miles = int(listing_miles_text.replace(",", "").replace("miles", ""))
     return listing_miles
 
 
