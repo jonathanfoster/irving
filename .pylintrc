@@ -1,0 +1,8 @@
+[MASTER]
+ignore=.tox,.venv
+
+[MESSAGES CONTROL]
+disable=missing-docstring,duplicate-code,too-many-instance-attributes,too-few-public-methods
+
+[FORMAT]
+good-names=f,id
