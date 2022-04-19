@@ -15,7 +15,9 @@ class ExceptionHandler(click.Group):
         return None
 
 
-@click.group(cls=ExceptionHandler, help="Irving helps you estimate how much your car is worth.")
+@click.group(
+    cls=ExceptionHandler, help="Irving helps you estimate how much your car is worth."
+)
 @click.version_option(version=__version__)
 def main():
     pass

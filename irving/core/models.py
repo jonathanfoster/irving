@@ -1,6 +1,15 @@
+from enum import Enum
+
+
+class VehicleCondition(str, Enum):
+    NEW = "new"
+    USED = "used"
+
+
 class VehicleListing:
     def __init__(self, **kwargs):
         self.listing_id = kwargs.get("listing_id", None)
+        self.condition = kwargs.get("condition", None)
         self.year = kwargs.get("year", None)
         self.make = kwargs.get("make", None)
         self.model = kwargs.get("model", None)

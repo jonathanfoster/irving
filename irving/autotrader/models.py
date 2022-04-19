@@ -4,8 +4,6 @@ from irving.core.models import VehicleListing
 class AutotraderVehicleListing(VehicleListing):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        if self.listing_id:
-            self.listing_url = self.format_listing_url(self.listing_id)
         self.listing_source = "autotrader"
 
     @classmethod
