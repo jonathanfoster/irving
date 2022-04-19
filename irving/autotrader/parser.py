@@ -100,11 +100,12 @@ def parse_listing_owner(listing_tag):
     )
     if not listing_owner_tag:
         raise ValueError("Listing owner tag not found.")
-    listing_owner_matches = _listing_owner_re.search(listing_owner_tag.get_text())
+    listing_owner_text = listing_owner_tag.get_text()
+    listing_owner_matches = _listing_owner_re.search(listing_owner_text)
     if listing_owner_matches:
         listing_owner = listing_owner_matches.group(1)
         listing_distance = float(listing_owner_matches.group(2))
     else:
-        listing_owner = None
+        listing_owner = listing_owner_text
         listing_distance = 0
     return listing_owner, listing_distance
