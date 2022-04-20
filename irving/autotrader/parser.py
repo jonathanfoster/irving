@@ -76,7 +76,7 @@ def parse_listing_title(listing_tag):
 def parse_listing_price(listing_tag):
     listing_price_tag = listing_tag.find_next(class_="first-price")
     if not listing_price_tag:
-        raise ValueError("Listing price tag not found.")
+        return None
     listing_price = int(listing_price_tag.get_text().replace(",", ""))
     return listing_price
 
